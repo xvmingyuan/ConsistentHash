@@ -69,24 +69,25 @@ public class Proxy<T> extends ConsistentHash<T> {
 	 * 最大访问量IP
 	 */
 	public void maxRequestNum() {
-		tree = new TreeMap<Integer, String>();
-		Set<Entry<String, Integer>> entrySet = IpCount.entrySet();
-		for (Entry<String, Integer> entry : entrySet) {
-			tree.put(entry.getValue(), entry.getKey());
-		}
+		treeAdd();
 		System.out.println("最大访问量IP:" + tree.get(tree.lastKey())+"("+tree.lastKey()+")");
 		tree = null;
 	}
+
 	/**
 	 * 最小访问量IP
 	 */
 	public void minRequestNum() {
-		tree = new TreeMap<Integer, String>();
-		Set<Entry<String, Integer>> entrySet = IpCount.entrySet();
-		for (Entry<String, Integer> entry : entrySet) {
-			tree.put(entry.getValue(), entry.getKey());
-		}
+		treeAdd();
 		System.out.println("最小访问量IP:" + tree.get(tree.firstKey())+"("+tree.firstKey()+")");
 		tree = null;
 	}
+
+    private void treeAdd() {
+        tree = new TreeMap<Integer, String>();
+        Set<Entry<String, Integer>> entrySet = IpCount.entrySet();
+        for (Entry<String, Integer> entry : entrySet) {
+            tree.put(entry.getValue(), entry.getKey());
+        }
+    }
 }
