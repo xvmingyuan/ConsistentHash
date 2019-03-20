@@ -23,6 +23,7 @@ public class Proxy<T> extends ConsistentHash<T> {
 
 	public Proxy(HashFunc hashFunc, int numberOfReplicas, Collection<T> nodes) {
 		super(hashFunc, numberOfReplicas, nodes);
+		// 创建统计登记集合
 		IpCount = new ConcurrentHashMap<String, Integer>();
 		for (T t : nodes) {
 			IpCount.put(t.toString(), 0);
@@ -32,6 +33,7 @@ public class Proxy<T> extends ConsistentHash<T> {
 
 	public Proxy(int numberOfReplicas, Collection<T> nodes) {
 		super(numberOfReplicas, nodes);
+		// 创建统计登记集合
 		IpCount = new ConcurrentHashMap<String, Integer>();
 		for (T t : nodes) {
 			IpCount.put(t.toString(), 0);
@@ -41,6 +43,7 @@ public class Proxy<T> extends ConsistentHash<T> {
 	@Override
 	public T get(Object key) {
 		T t = super.get(key);
+		// 节点 访问+1
 		IpCount.put(t.toString(), IpCount.get(t.toString()) + 1);
 		return t;
 	}
@@ -48,11 +51,12 @@ public class Proxy<T> extends ConsistentHash<T> {
 	@Override
 	public void remove(T node) {
 		super.remove(node);
+		// 节点 访问-1
 		IpCount.remove(node);
 	}
 
 	/**
-	 * 节点负载状态列表
+	 * 打印节点负载状态列表
 	 */
 	public void print() {
 		Set<Entry<String, Integer>> entrySet = IpCount.entrySet();

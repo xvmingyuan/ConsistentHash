@@ -7,6 +7,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.sun.swing.internal.plaf.synth.resources.synth_zh_CN;
 
+/**
+ * 一致性算法测试
+ */
 public class HashTest {
 
 	private static String[] servers = { "192.168.0.0:1001", "192.168.0.1:1001", "192.168.0.2:1001", "192.168.0.3:1001",
